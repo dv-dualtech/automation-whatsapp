@@ -3,25 +3,24 @@ import path from 'path';
 
 const authFile = path.join(__dirname, '.auth/user.json');
 
-setup('WhatsappWebQrScan', async ({ page }) => {
-        // try opening WhatsApp Web
-        await page.goto('https://web.whatsapp.com/');
-        
-        // Wait for QR code to appear
-        await expect(page.getByLabel('Scan this QR code to link a device!')).toBeVisible();
-        // const qrCode = await page.waitForSelector('[data-testid="qrcode"]', { timeout: 120000 });
-        
-        // Display message to user about scanning QR code
-        console.log('Please scan the QR code with your WhatsApp mobile app to link the device');
-        
-        await page.waitForURL('https://web.whatsapp.com/');
-        // Wait for the chat list to appear which indicates successful linking
-        await page.waitForSelector('[data-testid="chat-list"]', { timeout: 60000 });
-        console.log('Device linked successfully');
-        
-        // Store the context for reuse
+setup('WhatsappWebQrScan', {
+}, async ({ page }) => {
+    // Open WhatsApp Web
+    await page.goto('https://web.whatsapp.com/');
     
+    // Wait for QR code to appear with longer timeout
+    await expect(page.getByLabel('Scan this QR code to link a device!')).toBeVisible({ timeout: 30000 });
     
-    // End of authentication steps.
+    console.log('Please scan the QR code with your WhatsApp mobile app to link the device');
+    
+    // Wait for successful login
+    // Additional verification that we're logged in
+    await expect(page.locator('#side')).toBeVisible({ timeout: 120000 });
+    // This will wait for the chat list to appear which indicates successful login
+    // await expect(page.locator('[data-testid="chat-list"]')).toBeVisible({ timeout: 120000 });
+    
+    console.log('Device linked successfully');
+
+    // Store authentication state
     await page.context().storageState({ path: authFile });
-  });
+});

@@ -37,17 +37,21 @@ export default defineConfig({
     {
       name: 'setup_link_whatsappWebDevice',
       testMatch: /.*setup.ts/,
+      timeout: 120000,
+      use: {
+        actionTimeout: 60000
+      }
     },
     // {
     //   name: 'whatsapp_tests',
     //   testMatch: /.*whatsapp.spec.ts/,
     //   retries: 2
     // },
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    //   dependencies: [ 'setup_link_whatsappWebDevice']
-    // },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+      dependencies: [ 'setup_link_whatsappWebDevice']
+    },
 
     {
       name: 'firefox',

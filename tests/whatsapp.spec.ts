@@ -64,10 +64,10 @@ import { test, expect } from '@playwright/test';
         await page.goto('https://web.whatsapp.com/');
         
         // Wait for chat list to be visible
-        await page.waitForSelector('[data-testid="chat-list"]');
+        // await page.waitForSelector('[data-testid="chat-list"]');
         
         // Click on new chat button
-        await page.click('[data-testid="new-chat"]');
+        await page.getByRole('paragraph').click();
         
         // Type phone number in search box
         const searchBox = await page.waitForSelector('[data-testid="search"]');
