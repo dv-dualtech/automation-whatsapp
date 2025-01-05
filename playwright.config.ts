@@ -12,7 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: './tests', //'./tests-examples',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -35,19 +35,31 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'setup_link_whatsappWebDevice',
+      testMatch: /.*setup.ts/,
     },
+    // {
+    //   name: 'whatsapp_tests',
+    //   testMatch: /.*whatsapp.spec.ts/,
+    //   retries: 2
+    // },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    //   dependencies: [ 'setup_link_whatsappWebDevice']
+    // },
 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      dependencies: [ 'setup_link_whatsappWebDevice']
     },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    //   dependencies: [ 'setup_link_whatsappWebDevice']
+    // },
 
     /* Test against mobile viewports. */
     // {
